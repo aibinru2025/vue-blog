@@ -1,3 +1,4 @@
+<!--
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
@@ -31,7 +32,7 @@ header {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    padding-right: calc(var(&#45;&#45;section-gap) / 2);
   }
 
   .logo {
@@ -43,5 +44,32 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+</style>
+-->
+
+<template>
+  <div id="app">
+    <LoginPage />
+  </div>
+</template>
+
+<script>
+import LoginPage from './components/LoginPage.vue'
+
+export default {
+  name: 'App',
+  components: {
+    LoginPage
+  }
+}
+</script>
+
+<style scoped>
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5;
 }
 </style>
