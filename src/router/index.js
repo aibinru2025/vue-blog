@@ -26,7 +26,7 @@ const router = createRouter({
 // 路由守卫：检查是否已登录
 router.beforeEach((to, from, next) => {
     const isLoggedIn = localStorage.getItem('isLoggedIn'); // 判断登录状态
-    const protectedRoutes = ['/dashboard', '/publish-article', '/article-list']; // 受保护路由
+    const protectedRoutes = ['/','/dashboard', '/publish-article', '/article-list']; // 受保护路由
 
     // 如果用户访问受保护页面，而没有登录，跳转到登录页面
     if (protectedRoutes.includes(to.path) && !isLoggedIn) {
