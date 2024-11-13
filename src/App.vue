@@ -1,75 +1,42 @@
-<!--
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
-</template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(&#45;&#45;section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
--->
-
-<template>
+<!--<template>
   <div id="app">
-    <LoginPage />
+    <router-view></router-view> &lt;!&ndash; 这里渲染当前路由的组件 &ndash;&gt;
   </div>
 </template>
 
 <script>
-import LoginPage from './components/LoginPage.vue'
+export default {
+  name: 'App'
+}
+</script>-->
+
+
+<template>
+  <div id="app">
+    <!-- 判断是否已登录，登录后显示 Sidebar 和 Header -->
+    <Sidebar v-if="isLoggedIn" />
+    <div >
+      <Header  v-if="isLoggedIn"/>
+      <router-view />
+    </div>
+  </div>
+
+</template>
+
+<script>
+import Sidebar from './layout/Sidebar.vue';  // 导入 Sidebar 组件
+import Header from './layout/Header.vue';    // 导入 Header 组件
 
 export default {
   name: 'App',
   components: {
-    LoginPage
+    Sidebar,
+    Header
+  },
+  computed: {
+    isLoggedIn() {
+      return localStorage.getItem('isLoggedIn') === 'true';  // 根据登录状态显示 Sidebar 和 Header
+    }
   }
 }
 </script>
-
-<style scoped>
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f2f5;
-}
-</style>

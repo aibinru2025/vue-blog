@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-box">
       <h2>Welcome Back</h2>
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleLogin">
         <div class="input-group">
           <label for="username">Username</label>
           <input v-model="username" type="text" id="username" placeholder="Enter your username" required />
@@ -13,90 +13,44 @@
           <input v-model="password" type="password" id="password" placeholder="Enter your password" required />
         </div>
 
-        <div class="input-group">
+<!--        <div class="input-group">
           <label for="captcha">Captcha</label>
           <div class="captcha-input">
             <input v-model="captcha" type="text" id="captcha" placeholder="Enter captcha" required />
             <img :src="captchaUrl" alt="Captcha" @click="refreshCaptcha" />
           </div>
-        </div>
+        </div>-->
 
         <button type="submit" class="login-btn">Login</button>
-        <p class="forgot-password" @click="handleForgotPassword">Forgot your password?</p>
+<!--        <p class="forgot-password" @click="handleForgotPassword">Forgot your password?</p>-->
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
+  name: 'Login',
   data() {
     return {
       username: '',
-      password: '',
-      captcha: '',
-      captchaUrl: '' // 用来存储验证码图片的 URL
-    }
-  },
-  mounted() {
-    this.loadCaptcha() // 页面加载时获取验证码
+      password: ''
+    };
   },
   methods: {
-    // 加载验证码
-    loadCaptcha() {
-      axios.get('/api/get-captcha') // 通过 GET 请求获取验证码
-          .then(response => {
-            this.captchaUrl = response.data.captchaUrl // 设置验证码的图片链接
-          })
-          .catch(error => {
-            console.error('Error fetching captcha:', error)
-          })
-    },
-
-    // 刷新验证码
-    refreshCaptcha() {
-      this.loadCaptcha() // 重新加载验证码
-    },
-
-    // 处理登录
-    handleSubmit() {
-      const data = {
-        username: this.username,
-        password: this.password,
-        captcha: this.captcha
-      }
-
-      axios.post('/api/login', data) // POST 请求进行登录
-          .then(response => {
-            if (response.data.success) {
-              alert('Login successful!')
-            } else {
-              alert('Login failed: ' + response.data.message)
-            }
-          })
-          .catch(error => {
-            console.error('Login error:', error)
-          })
-    },
-
-    // 处理忘记密码
-    handleForgotPassword() {
-      const email = prompt("Enter your email to reset password:")
-      if (email) {
-        axios.post('/api/forgot-password', { email })
-            .then(response => {
-              alert('Password reset instructions have been sent to your email.')
-            })
-            .catch(error => {
-              console.error('Forgot password error:', error)
-            })
+    handleLogin() {
+      // 假设用户名和密码是 "admin"，登录成功
+      if (this.username === 'admin' && this.password === 'admin') {
+        localStorage.setItem('isLoggedIn', 'true');
+        this.$router.push('/dashboard'); // 登录后跳转到后台页面
+      } else {
+        alert('用户名或密码错误');
       }
     }
   }
 }
 </script>
+
 
 <style scoped>
 /* Your styles here (same as before with minor adjustments) */
@@ -109,9 +63,9 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  }
+}
 
-  .login-box {
+.login-box {
   width: 350px;
   padding: 40px;
   background-color: rgba(255, 255, 255, 0.9);
