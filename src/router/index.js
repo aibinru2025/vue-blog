@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Login from '../auth/Login.vue';
-import Dashboard from '../dashboard/Dashboard.vue';
-import PublishArticle from '../article/PublishArticle.vue';
-import ArticleList from '../article/ArticleList.vue';
+import Login from '../views/auth/Login.vue';
+import LayoutView from '../layout/LayoutView.vue';
+import Dashboard from '../views/dashboard/Dashboard.vue';
+import PublishArticle from '../views/article/PublishArticle.vue';
+import ArticleList from '../views/article/ArticleList.vue';
 
 const routes = [
-    { path: '/', component: Login }, // 登录页
-    { path: '/login', component: Login }, // 登录页
-    { path: '/dashboard', component: Dashboard }, // 后台仪表盘
-    { path: '/publish-article', component: PublishArticle }, // 发布文章页
-    { path: '/article-list', component: ArticleList } // 文章列表页
+  { path: '/login', component: Login }, // 登录页
+  {
+    path: '/',
+    component: LayoutView,
+    children: [
+      { path: 'dashboard', component: Dashboard }, // 后台仪表盘
+      { path: 'publish-article', component: PublishArticle }, // 发布文章页
+      { path: 'article-list', component: ArticleList } // 文章列表页
+    ]
+  }
 ];
 
 const router = createRouter({
